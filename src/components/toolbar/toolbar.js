@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class Toolbar extends Component {
   
-  selectBtnCtrl = (list) => {
+  changeAllMsgIcon = (list) => {
     const selectedCount = list.filter(message => message.isSelected === true).length
 
     if (selectedCount > 0 && selectedCount < list.length) {
@@ -16,7 +16,7 @@ class Toolbar extends Component {
     }
   }
 
-  allMessageToggle = (e) => {
+  allMsgToggle = (e) => {
     const { onAllMessageToggle, messageList } = this.props
     onAllMessageToggle(messageList)
   }
@@ -33,8 +33,8 @@ class Toolbar extends Component {
             {unreadCount === 1 ? "unread message" : "unread messages"}
           </p>
 
-          <button onClick={this.allMessageToggle} className="btn btn-default">
-            <i className={this.selectBtnCtrl(messageList)}></i>
+          <button onClick={this.allMsgToggle} className="btn btn-default">
+            <i className={this.changeAllMsgIcon(messageList)}></i>
           </button>
 
           <button className="btn btn-default" disabled="disabled">

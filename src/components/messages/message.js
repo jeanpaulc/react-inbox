@@ -4,14 +4,18 @@ class Message extends Component {
 
   handleMessageSelect = (e) => {
     const { onMessageSelect } = this.props
-
     const id = e.target.value
     onMessageSelect(id)
   }
 
   handleMessageOpen = (e) => {
-    
-    console.log('message opened')
+    console.log('message opened', e.target.value)
+  }
+
+  handleStarSelect = (e) => {
+    const id = e.target.getAttribute('value')
+
+    this.props.onStarSelect(id)
   }
   
   render() {
@@ -24,13 +28,13 @@ class Message extends Component {
               <input type="checkbox" value={id} onChange={this.handleMessageSelect} checked={isSelected}/>
             </div>
             <div className="col-xs-2">
-              <i className={starred ? "star fa fa-star" : "star fa fa-star-o"}></i>
+              <i value={id} className={starred ? "star fa fa-star" : "star fa fa-star-o"} onClick={this.handleStarSelect}></i>
             </div>
           </div>
         </div>
         <div className="col-xs-11">
           { labels.map((label, i) => <span key={i} className="label label-warning">{label}</span>) }
-          <a onClick={this.handleMessageOpen}>
+          <a value={id} onClick={this.handleMessageOpen}>
             {subject}
           </a>
         </div>

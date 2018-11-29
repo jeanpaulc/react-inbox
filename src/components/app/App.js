@@ -18,14 +18,33 @@ class App extends Component {
     const response = await fetch(`${this.api}/messages`)
     const messages = await response.json()
 
-    /* Since each messages's "selected" state should not persist OR post to the API, mappedWithSelect 
-    creates a new "isSelected" property to each message on page load, and set to "false" */
+    /* Since each messages' "selected" state should not persist OR post to the API, mappedWithSelect 
+    creates a new "isSelected" property to each message on page load, and is initially set to "false" */
     const mappedWithSelect = messages.map(message => { 
       message.isSelected = false 
       return message
     })
 
     this.setState({ messageList: mappedWithSelect })
+  }
+
+  onStarSelect = async (id) => {
+    const body = { messageIds: [parseInt(id) ], command: 'star'  }
+
+    const response = await fetch(`http://localhost:8082/api/messages`, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+
+    const messages = await response.json()
+
+    console.log(messages)
+
+    this.setState({ messageList: messages })
   }
 
   onMessageSelect = (id) => {
@@ -76,7 +95,7 @@ class App extends Component {
     return (
       <div className="container">
         <Toolbar messageList={this.state.messageList} onAllMessageToggle={this.onAllMessageToggle}/>
-        <MessageList messageList={this.state.messageList} onMessageSelect={this.onMessageSelect}/>
+        <MessageList messageList={this.state.messageList} onMessageSelect={this.onMessageSelect} onStarSelect={this.onStarSelect}/>
       </div>
     )
   }

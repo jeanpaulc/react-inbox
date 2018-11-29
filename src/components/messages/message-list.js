@@ -1,7 +1,7 @@
 import React from 'react'
 import Message from './message'
 
-const MessageList = ({ messageList, onMessageSelect }) => {
+const MessageList = ({ messageList, onMessageSelect, onStarSelect }) => {
   return (
     <div>
       {
@@ -11,6 +11,7 @@ const MessageList = ({ messageList, onMessageSelect }) => {
               key={i} 
               message={message}
               onMessageSelect={onMessageSelect} 
+              onStarSelect={onStarSelect}
             />
           )
         })
